@@ -1,0 +1,14 @@
+{
+  "name": "walrus",
+  "version": "1.0.0",
+  "description": "Sassy bot for dURI discord server",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "SeductiveWalrus, AtomiCatalyst",
+  "license": "",
+  "dependencies": {
+    "eris": "^0.14.1"
+  }
+}
