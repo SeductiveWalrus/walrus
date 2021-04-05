@@ -1,6 +1,9 @@
+const { User } = require("eris");
+
 const Eris = require("eris"),
 token = require("./token.json").token,
 commands = require("./commands")(),
+config = require("./config.json"),
 bot = new Eris(token);
 
 bot.connect();
