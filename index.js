@@ -1,1 +1,9 @@
-const Eris = require("eris");
+const Eris = require("eris"),
+token = require("./token.json").token,
+bot = new Eris(token);
+
+bot.connect();
+
+bot.on("ready", () =>{
+    console.log("Bot connected")
+});
