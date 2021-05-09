@@ -64,5 +64,9 @@ bot.on("messageCreate", async (msg) =>{
         if(attachments){
             bot.createMessage(config.adminChannel, attachments.join(" "));
         }
+        // If message isn't DM and contains trigger
+    }else if(config.commandTriggers.includes(msg.content)){
+        // Respond to trigger with random response
+        bot.createMessage(msg.channel.id, config.responses[Math.floor(Math.random() * (config.responses.length))]);
     } 
 });

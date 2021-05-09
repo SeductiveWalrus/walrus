@@ -1,4 +1,6 @@
 {
     "adminRole":"828400672323534889",
-    "adminChannel":"828426939572158524"
+    "adminChannel":"828426939572158524",
+    "commandTriggers":["hey walrus", "yo walrus", "ay walrus", "psst walrus", "walrus"],
+    "responses":["hi", "what", "yea", "henlo", "what do you want", "ye", "yes"]
 }
