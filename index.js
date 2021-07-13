@@ -16,8 +16,11 @@ bot.on("ready", () =>{
 
 // Event handler for new message
 bot.on("messageCreate", async (msg) =>{
-    if(msg.author.bot === true) return;
     // if DM
+    if(msg.author.bot === true) return;
+
+    let listening = listeningTo[msg.author.id] ? true : false;
+
     if(msg.channel.type === 1){
         // Pre-declare fields of text of embed to be sent to admin channel 
         let fields = [
@@ -66,14 +69,22 @@ bot.on("messageCreate", async (msg) =>{
         if(attachments){
             bot.createMessage(config.adminChannel, attachments.join(" "));
         }
-        // If message isn't DM and contains trigger
-    }else if(config.commandTriggers.includes(msg.content) && ){
+        // If message isn't DM and contains trigger while bot not listening
+    }else if(config.commandTriggers.includes(msg.content) && !listening){
         // Set listening state of uid to true 
         listeningTo[msg.author.id] = true;
+
         // TODO: Set listening state to false after command is recognized
         // but before it is processed 
 
         // Respond to trigger with random response
         bot.createMessage(msg.channel.id, config.responses[Math.floor(Math.random() * (config.responses.length))]);
-    } 
+    // If message isn't DM and bot is listening to user
+    }else if(listening){
+        let command = msg.content.split(" ")[0];
+        // Return if not a command
+        if(!commands[command]) return bot.createMessage(msg.channel.id, "That's not a command. Try again");
+
+        // TODO: Run specified command and pass arguments
+    }
 });
