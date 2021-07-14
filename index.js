@@ -81,10 +81,18 @@ bot.on("messageCreate", async (msg) =>{
         bot.createMessage(msg.channel.id, config.responses[Math.floor(Math.random() * (config.responses.length))]);
     // If message isn't DM and bot is listening to user
     }else if(listening){
-        let command = msg.content.split(" ")[0];
+        // Declare args within msg object to be passed into /commands
+        msg.args = msg.content.split(" ");
+        let command = msg.args.shift();
         // Return if not a command
         if(!commands[command]) return bot.createMessage(msg.channel.id, "That's not a command. Try again");
-
-        // TODO: Run specified command and pass arguments
+        // Try executing recognized command and catch exceptions
+        try{
+            // Create message containing string returned by exported command function 
+            bot.createMessage(msg.channel.id, require(`./commands/${command}`)(msg));
+        }catch(e){
+            bot.createMessage(msg.channel.id, "```" + e + "```")
+            throw e;
+        }
     }
 });
