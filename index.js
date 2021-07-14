@@ -73,19 +73,16 @@ bot.on("messageCreate", async (msg) =>{
     }else if(config.commandTriggers.includes(msg.content) && !listening){
         // Set listening state of uid to true 
         listeningTo[msg.author.id] = true;
-
-        // TODO: Set listening state to false after command is recognized
-        // but before it is processed 
-
         // Respond to trigger with random response
         bot.createMessage(msg.channel.id, config.responses[Math.floor(Math.random() * (config.responses.length))]);
     // If message isn't DM and bot is listening to user
     }else if(listening){
+        // Return if not a command
+        // TODO: Await response from author if command undefined
+        if(!commands[command]) return bot.createMessage(msg.channel.id, "That's not a command. Try again");
         // Declare args within msg object to be passed into /commands
         msg.args = msg.content.split(" ");
         let command = msg.args.shift();
-        // Return if not a command
-        if(!commands[command]) return bot.createMessage(msg.channel.id, "That's not a command. Try again");
         // Try executing recognized command and catch exceptions
         try{
             // Create message containing string returned by exported command function 
@@ -94,5 +91,6 @@ bot.on("messageCreate", async (msg) =>{
             bot.createMessage(msg.channel.id, "```" + e + "```")
             throw e;
         }
+        listeningTo[msg.author.id] = false;
     }
 });
